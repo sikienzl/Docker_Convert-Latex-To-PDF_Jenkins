@@ -14,16 +14,17 @@ RUN apk update && \
     biber && \
     rm -rf /var/cache/apk/*
 
+# Erstelle den Benutzer jenkins mit uid 1000, gid 1000 und Home-Verzeichnis /home/jenkins
+RUN adduser -D -h /home/jenkins -s /bin/bash -u 1000 -g 1000 jenkins
+
+# Gib jenkins Benutzer Schreibrechte auf sein Home-Verzeichnis
+RUN chown -R jenkins:jenkins /home/jenkins
+
 # Skripte kopieren
 COPY convert_latex_to_pdf.sh /usr/local/bin/convert_latex_to_pdf.sh
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Skript ausführbar machen
-RUN chmod +x /usr/local/bin/convert_latex_to_pdf.sh && \
-    chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/convert_latex_to_pdf.sh
 
-# Standard-Eintragspunkt definieren
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
-# Standard-Argumente (wenn keine übergeben werden)
-CMD ["convert_latex_to_pdf.sh", "example.tex"]
+# Den Benutzer auf jenkins setzen, um die Befehle auszuführen
+USER jenkins
