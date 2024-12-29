@@ -15,7 +15,7 @@ RUN apk update && \
     rm -rf /var/cache/apk/*
 
 # Erstelle den Benutzer jenkins mit uid 1000, gid 1000 und Home-Verzeichnis /home/jenkins
-RUN adduser -D -h /home/jenkins -s /bin/bash -u 1000 -g 1000 jenkins
+RUN addgroup -g 1000 jenkins && adduser -D -h /home/jenkins -s /bin/bash -u 1000 -G jenkins jenkins
 
 # Gib jenkins Benutzer Schreibrechte auf sein Home-Verzeichnis
 RUN chown -R 1000:1000 /home/jenkins
