@@ -6,12 +6,13 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositor
 
 # Installiere bash, texlive, biber und Bereinigung von Cache
 RUN apk update && \
-    apk add --no-cache \
+    apk add --no-cache --update \
     bash \
     texmf-dist \
     texlive \
     texlive-full \
-    biber && \
+    biber \
+    build-base && \
     rm -rf /var/cache/apk/*
 
 # Erstelle den Benutzer jenkins mit uid 1000, gid 1000 und Home-Verzeichnis /home/jenkins
