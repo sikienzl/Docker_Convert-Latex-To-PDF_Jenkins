@@ -18,7 +18,7 @@ RUN apk update && \
 RUN adduser -D -h /home/jenkins -s /bin/bash -u 1000 -g 1000 jenkins
 
 # Gib jenkins Benutzer Schreibrechte auf sein Home-Verzeichnis
-RUN chown -R jenkins:jenkins /home/jenkins
+RUN chown -R 1000:1000 /home/jenkins
 
 # Skripte kopieren
 COPY convert_latex_to_pdf.sh /usr/local/bin/convert_latex_to_pdf.sh
